@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, Date, ForeignKey, func
 from sqlalchemy.orm import relationship
 
-from src.database import Base
+from src.db.base import Base
 
 
 class Request(Base):
@@ -14,7 +14,7 @@ class Request(Base):
     header = Column(String(255), nullable=False)
     text = Column(String(255), nullable=True)
 
-    date = Column(Date, nullable=False, server_default=func.current_date())
+    date = Column(Date, nullable=False)
 
     client = relationship("Client", back_populates="requests")
     tasks = relationship("Task", back_populates="request")

@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, CheckConstraint
 from sqlalchemy.orm import relationship
 
-from src.database import Base
+from src.db.base import Base
 
 class Engineer(Base):
     __tablename__ = "engineer"

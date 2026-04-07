@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, ForeignKey, UniqueConstraint
 from sqlalchemy.orm import relationship
 
-from src.database import Base
+from src.db.base import Base
 
 
 class EngineeringSkill(Base):
