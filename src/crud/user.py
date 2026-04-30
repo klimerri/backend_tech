@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from backend.models.user import User
-from backend.schemas.user import UserCreate, UserUpdate
+from src.models.user import User
+from src.schemas.user import UserCreate, UserUpdate
 
 
 def create_user(db: Session, user: UserCreate):
@@ -25,6 +25,15 @@ def get_user(db: Session, user_id: int):
 
 def get_user_by_login(db: Session, login: str):
     return db.query(User).filter(User.login == login).first()
+
+
+def authenticate_user(db: Session, login: str, password: str):
+    user = get_user_by_login(db, login)
+    if not user:
+        return None
+    if user.password != password:
+        return None
+    return user
 
 
 def get_users(db: Session, skip: int = 0, limit: int = 100):

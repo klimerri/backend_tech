@@ -39,4 +39,5 @@ class TaskOut(TaskBase):
     actual_completion_time: Optional[datetime]
 
     class Config:
+        orm_mode = True
         from_attributes = True

@@ -2,15 +2,16 @@ from pydantic import BaseModel
 from typing import Optional
 from datetime import date
 
+from src.schemas.client import ClientOut
+
 
 class RequestBase(BaseModel):
-    id_client: int
     header: str
     text: Optional[str] = None
 
 
 class RequestCreate(RequestBase):
-    pass
+    id_client: int
 
 
 class RequestUpdate(BaseModel):
@@ -20,9 +21,13 @@ class RequestUpdate(BaseModel):
     date: Optional[date] = None
 
 
-class RequestOut(RequestBase):
+class RequestOut(BaseModel):
     id: int
     date: date
+    header: str
+    text: Optional[str] = None
+    client: ClientOut
 
     class Config:
+        orm_mode = True
         from_attributes = True

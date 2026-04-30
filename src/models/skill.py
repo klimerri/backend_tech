@@ -11,3 +11,4 @@ class Skill(Base):
     name = Column(String(255), nullable=False)
 
     task_types = relationship("TaskType", back_populates="skill")
+    engineering_skills = relationship("EngineeringSkill",back_populates="skill",cascade="all, delete-orphan")

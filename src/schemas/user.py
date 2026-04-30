@@ -31,4 +31,11 @@ class User(UserBase):
     date_created: datetime
 
     class Config:
+        orm_mode = True
+        orm_mode = True
         from_attributes = True
+
+
+class UserLogin(BaseModel):
+    login: str
+    password: str

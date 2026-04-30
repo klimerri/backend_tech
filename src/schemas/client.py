@@ -1,11 +1,11 @@
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import BaseModel, Field
 from typing import Optional
 
 
 class ClientBase(BaseModel):
     name: str
     phone: str = Field(..., max_length=12)
-    mail: EmailStr
+    mail: str
     telegram: Optional[str] = None
     id_location: int
 
@@ -17,7 +17,7 @@ class ClientCreate(ClientBase):
 class ClientUpdate(BaseModel):
     name: Optional[str] = None
     phone: Optional[str] = Field(None, max_length=12)
-    mail: Optional[EmailStr] = None
+    mail: Optional[str] = None
     telegram: Optional[str] = None
     id_location: Optional[int] = None
 
@@ -26,4 +26,5 @@ class ClientOut(ClientBase):
     id: int
 
     class Config:
+        orm_mode = True
         from_attributes = True

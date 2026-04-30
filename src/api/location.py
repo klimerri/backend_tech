@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from backend.database import get_db
-from backend.schemas.location import Location, LocationCreate, LocationUpdate
-from backend.crud import location as crud
+from src.database import get_db
+from src.schemas.location import Location, LocationCreate, LocationUpdate
+from src.crud import location as crud
 
 router = APIRouter(prefix="/locations", tags=["Locations"])
 

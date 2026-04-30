@@ -25,5 +25,4 @@ class Engineer(Base):
     user = relationship("User", back_populates="engineer")
     location = relationship("Location", back_populates="engineers")
     engineering_skills = relationship("EngineeringSkill", back_populates="engineer", cascade="all, delete-orphan")
-    engineering_skills = relationship("EngineeringSkill",back_populates="skill",cascade="all, delete-orphan")
     tasks = relationship("Task", back_populates="engineer")

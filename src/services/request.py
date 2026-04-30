@@ -1,7 +1,10 @@
-from sqlalchemy.orm import Session
 
+
+from sqlalchemy import select
+from sqlalchemy.orm import Session
 from src.crud import request as crud
 from src.models.client import Client
+from src.models.task import Task
 from src.schemas.request import RequestCreate, RequestUpdate
 
 
@@ -32,3 +35,9 @@ def update(db: Session, request_id: int, data: RequestUpdate):
 
 def delete(db: Session, request_id: int):
     return crud.delete(db, request_id)
+
+def get_tasks(db: Session, request_id: int):
+    result = db.execute(select(Task).filter(Task.id_request == request_id))
+    tasks = result.scalars().all()
+
+    return tasks

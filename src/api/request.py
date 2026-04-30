@@ -49,3 +49,9 @@ def delete(request_id: int, db: Session = Depends(get_db)):
     if not obj:
         raise HTTPException(status_code=404, detail="Request not found")
     return {"detail": "Deleted"}
+
+
+@router.get("/{request_id}/tasks")
+def get_tasks_by_request_id(request_id: int, db: Session = Depends(get_db)):
+    result = service.get_tasks(db, request_id)
+    return result

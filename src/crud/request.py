@@ -1,14 +1,14 @@
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from src.models.request import Request
 from src.schemas.request import RequestCreate, RequestUpdate
 
 
 def get(db: Session, request_id: int):
-    return db.query(Request).filter(Request.id == request_id).first()
+    return db.query(Request).options(joinedload(Request.client)).filter(Request.id == request_id).first()
 
 
 def get_all(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(Request).offset(skip).limit(limit).all()
+    return db.query(Request).options(joinedload(Request.client)).offset(skip).limit(limit).all()
 
 
 def create(db: Session, data: RequestCreate):

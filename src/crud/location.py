@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from backend.models.location import Location
-from backend.schemas.location import LocationCreate, LocationUpdate
+from src.models.location import Location
+from src.schemas.location import LocationCreate, LocationUpdate
 
 
 def create_location(db: Session, location: LocationCreate):
