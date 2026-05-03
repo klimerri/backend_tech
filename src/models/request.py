@@ -18,3 +18,7 @@ class Request(Base):
 
     client = relationship("Client", back_populates="requests")
     tasks = relationship("Task", back_populates="request")
+
+    @property
+    def task_ids(self):
+        return [task.id for task in self.tasks]

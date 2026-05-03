@@ -27,6 +27,7 @@ class RequestOut(BaseModel):
     header: str
     text: Optional[str] = None
     client: ClientOut
+    task_ids: list[int] = []
 
     class Config:
         orm_mode = True

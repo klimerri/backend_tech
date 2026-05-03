@@ -46,4 +46,4 @@ def login(user_credentials: UserLogin, db: Session = Depends(get_db)):
     user = crud.authenticate_user(db, user_credentials.login, user_credentials.password)
     if not user:
         raise HTTPException(status_code=401, detail="Invalid credentials")
-    return {"role": user.role}
+    return {"role": user.role, "name": user.name, "lastname": user.surname}
