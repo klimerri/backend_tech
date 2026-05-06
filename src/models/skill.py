@@ -10,5 +10,5 @@ class Skill(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(255), nullable=False)
 
-    task_types = relationship("TaskType", back_populates="skill")
+    task_types = relationship("TaskType", secondary="task_type_skill", back_populates="skills")
     engineering_skills = relationship("EngineeringSkill",back_populates="skill",cascade="all, delete-orphan")

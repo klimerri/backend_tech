@@ -5,6 +5,7 @@ from src.crud import task as crud
 from src.models.engineer import Engineer
 from src.models.task_type import TaskType
 from src.schemas.task import TaskCreate, TaskUpdate
+from src.services.planning import plan_new_tasks
 
 
 VALID_STATUSES = {"new", "process", "done", "cancelled"}
@@ -20,7 +21,8 @@ def create(db: Session, data: TaskCreate):
     if not task_type:
         raise ValueError("TaskType not found")
 
-    return crud.create(db, data)
+    obj = crud.create(db, data)
+    return obj
 
 
 def get(db: Session, task_id: int):

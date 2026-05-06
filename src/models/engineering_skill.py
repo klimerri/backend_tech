@@ -11,6 +11,7 @@ class EngineeringSkill(Base):
 
     id_engineer = Column(Integer, ForeignKey("engineer.id"), nullable=False)
     id_skill = Column(Integer, ForeignKey("skill.id"), nullable=False)
+    level = Column(Integer, nullable=False)
 
     __table_args__ = (
         UniqueConstraint("id_engineer", "id_skill", name="uq_engineer_skill"),

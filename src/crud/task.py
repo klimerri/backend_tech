@@ -12,7 +12,7 @@ def get_all(db: Session, skip: int = 0, limit: int = 100):
 
 
 def create(db: Session, data: TaskCreate):
-    obj = Task(**data.model_dump())
+    obj = Task(**data.dict())
     db.add(obj)
     db.commit()
     db.refresh(obj)

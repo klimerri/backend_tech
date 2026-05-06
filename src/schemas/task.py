@@ -12,7 +12,6 @@ class TaskBase(BaseModel):
     id_location: int
     id_request: int
 
-
 class TaskCreate(TaskBase):
     pass
 
@@ -24,6 +23,7 @@ class TaskUpdate(BaseModel):
     priority: Optional[int] = None
     id_engineer: Optional[int] = None
     status: Optional[str] = None
+    start_time: Optional[datetime] = None
     completion_time: Optional[datetime] = None
     estimated_completion_time: Optional[datetime] = None
     actual_completion_time: Optional[datetime] = None
@@ -35,6 +35,7 @@ class TaskOut(TaskBase):
     id: int
     status: str
     created_at: datetime
+    start_time: Optional[datetime]
     completion_time: Optional[datetime]
     estimated_completion_time: Optional[datetime]
     actual_completion_time: Optional[datetime]
@@ -57,10 +58,19 @@ class LocationSimple(BaseModel):
         from_attributes = True
 
 
+class SkillSimple(BaseModel):
+    id: int
+    name: str
+
+    class Config:
+        orm_mode = True
+        from_attributes = True
+
+
 class TaskTypeSimple(BaseModel):
     id: int
     name: str
-    id_skill: int
+    skills: list[SkillSimple]
     junior_time: int
     middle_time: int
     senior_time: int
@@ -130,6 +140,7 @@ class TaskOutWithDetails(BaseModel):
     priority: int
     status: str
     created_at: datetime
+    start_time: Optional[datetime]
     completion_time: Optional[datetime]
     estimated_completion_time: Optional[datetime]
     actual_completion_time: Optional[datetime]

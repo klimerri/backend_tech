@@ -6,6 +6,7 @@ from src.schemas.skill import SkillOut
 class EngineeringSkillBase(BaseModel):
     id_engineer: int
     id_skill: int
+    level: int
 
 
 class EngineeringSkillCreate(EngineeringSkillBase):

@@ -1,3 +1,4 @@
+from src.services.planning import plan_new_tasks
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
@@ -8,6 +9,11 @@ from src.services import task as service
 
 router = APIRouter(prefix="/tasks", tags=["Tasks"])
 
+# Эндпоинт для запуска планирования задач
+@router.post("/plan", response_model=List[TaskOutWithDetails])
+def run_planning(db: Session = Depends(get_db)):
+    tasks = plan_new_tasks(db)
+    return tasks
 
 @router.post("/", response_model=TaskOutWithDetails)
 def create(data: TaskCreate, db: Session = Depends(get_db)):
