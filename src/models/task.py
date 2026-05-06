@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
 
@@ -17,6 +19,7 @@ class Task(Base):
     id_engineer = Column(Integer, ForeignKey("engineer.id"), nullable=True)
 
     status = Column(String(20), nullable=False, default="new")
+    created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
 
     completion_time = Column(DateTime, nullable=True)
     estimated_completion_time = Column(DateTime, nullable=True)

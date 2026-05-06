@@ -1,6 +1,11 @@
 from pydantic import BaseModel, Field
 from typing import Optional
 
+from src.schemas.location import Location
+from src.schemas.user import User
+from src.schemas.engineering_skill import EngineeringSkillOut
+from src.schemas.task import TaskOut
+
 
 class EngineerBase(BaseModel):
     id_user: int
@@ -23,6 +28,10 @@ class EngineerUpdate(BaseModel):
 
 class EngineerOut(EngineerBase):
     id: int
+    user: User
+    location: Location
+    engineering_skills: list[EngineeringSkillOut] = []
+    tasks: list[TaskOut] = []
 
     class Config:
         orm_mode = True

@@ -1,18 +1,34 @@
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from src.models.engineer import Engineer
+from src.models.engineering_skill import EngineeringSkill
 from src.schemas.engineer import EngineerCreate, EngineerUpdate
 
 
 def get_engineer(db: Session, engineer_id: int):
-    return db.query(Engineer).filter(Engineer.id == engineer_id).first()
+    return db.query(Engineer).options(
+        joinedload(Engineer.user),
+        joinedload(Engineer.location),
+        joinedload(Engineer.engineering_skills).joinedload(EngineeringSkill.skill),
+        joinedload(Engineer.tasks),
+    ).filter(Engineer.id == engineer_id).first()
 
 
 def get_engineer_by_user_id(db: Session, user_id: int):
-    return db.query(Engineer).filter(Engineer.id_user == user_id).first()
+    return db.query(Engineer).options(
+        joinedload(Engineer.user),
+        joinedload(Engineer.location),
+        joinedload(Engineer.engineering_skills).joinedload(EngineeringSkill.skill),
+        joinedload(Engineer.tasks),
+    ).filter(Engineer.id_user == user_id).first()
 
 
 def get_engineers(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(Engineer).offset(skip).limit(limit).all()
+    return db.query(Engineer).options(
+        joinedload(Engineer.user),
+        joinedload(Engineer.location),
+        joinedload(Engineer.engineering_skills).joinedload(EngineeringSkill.skill),
+        joinedload(Engineer.tasks),
+    ).offset(skip).limit(limit).all()
 
 
 def create_engineer(db: Session, engineer: EngineerCreate):

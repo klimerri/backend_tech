@@ -1,4 +1,4 @@
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from sqlalchemy.exc import IntegrityError
 
 from src.models.engineering_skill import EngineeringSkill
@@ -6,11 +6,11 @@ from src.schemas.engineering_skill import EngineeringSkillCreate
 
 
 def get(db: Session, es_id: int):
-    return db.query(EngineeringSkill).filter(EngineeringSkill.id == es_id).first()
+    return db.query(EngineeringSkill).options(joinedload(EngineeringSkill.skill)).filter(EngineeringSkill.id == es_id).first()
 
 
 def get_all(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(EngineeringSkill).offset(skip).limit(limit).all()
+    return db.query(EngineeringSkill).options(joinedload(EngineeringSkill.skill)).offset(skip).limit(limit).all()
 
 
 def create(db: Session, data: EngineeringSkillCreate):

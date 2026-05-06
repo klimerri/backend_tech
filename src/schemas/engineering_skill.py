@@ -1,5 +1,7 @@
 from pydantic import BaseModel
 
+from src.schemas.skill import SkillOut
+
 
 class EngineeringSkillBase(BaseModel):
     id_engineer: int
@@ -12,6 +14,7 @@ class EngineeringSkillCreate(EngineeringSkillBase):
 
 class EngineeringSkillOut(EngineeringSkillBase):
     id: int
+    skill: SkillOut
 
     class Config:
         orm_mode = True
