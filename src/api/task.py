@@ -9,6 +9,20 @@ from src.services import task as service
 
 router = APIRouter(prefix="/tasks", tags=["Tasks"])
 
+@router.post("/{task_id}/cancel", response_model=TaskOutWithDetails)
+def cancel_task(task_id: int, db: Session = Depends(get_db)):
+    obj = service.cancel_task(db, task_id)
+    if not obj:
+        raise HTTPException(status_code=404, detail="Task not found")
+    return obj
+
+@router.post("/{task_id}/complete", response_model=TaskOutWithDetails)
+def complete_task(task_id: int, db: Session = Depends(get_db)):
+    obj = service.complete_task(db, task_id)
+    if not obj:
+        raise HTTPException(status_code=404, detail="Task not found")
+    return obj
+
 # Эндпоинт для запуска планирования задач
 @router.post("/plan", response_model=List[TaskOutWithDetails])
 def run_planning(db: Session = Depends(get_db)):

@@ -58,6 +58,26 @@ def update_status(db: Session, task_id: int, status: str):
     if not task:
         return None
 
+    # Если отмена или завершение, уменьшаем workload инженера на длительность задачи
+    if status in ("done", "cancelled") and task.id_engineer:
+        engineer = db.query(Engineer).filter(Engineer.id == task.id_engineer).first()
+        task_type = db.query(TaskType).filter(TaskType.id == task.id_task_type).first()
+       
+        if engineer and task_type:
+            seniority = engineer.seniority
+            if seniority == "junior":
+                duration = task_type.junior_time
+            elif seniority == "middle":
+                duration = task_type.middle_time
+            elif seniority == "senior":
+                duration = task_type.senior_time
+            else:
+                duration = 0
+            
+            # workload не может быть отрицательным
+            engineer.workload = max(engineer.workload - duration, 0)
+            db.add(engineer)
+
     task.status = status
 
     if status == "done":
@@ -66,6 +86,14 @@ def update_status(db: Session, task_id: int, status: str):
     db.commit()
     db.refresh(task)
     return task
+
+def cancel_task(db: Session, task_id: int):
+    """Отмена заявки с уменьшением workload инженера"""
+    return update_status(db, task_id, "cancelled")
+
+def complete_task(db: Session, task_id: int):
+    """Завершение заявки с уменьшением workload инженера"""
+    return update_status(db, task_id, "done")
 
 
 def update(db: Session, task_id: int, data: TaskUpdate):
